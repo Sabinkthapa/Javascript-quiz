@@ -105,12 +105,15 @@ var resultDisplayEle = document.getElementById("resultDisplay");
 // console.log(resultDisplayEle);
 var RestartGame = document.getElementById("restartbtn");
 // console.log(RestartGame);
-
+var initialsInput = document.getElementById("username");
+var highestScoreDisplay = document.getElementById("highestScore");
+var statSubmitButton = document.getElementById("stat-submit");
 
 var currentQuestion = 0;
 var score = 0;
 var timerleft = 60;
 var timer;
+var initials;
 
 startGameElement.addEventListener ('click' , quizStart);
 
@@ -125,13 +128,16 @@ function startTimer(){
          timer = setInterval(function(){
         timerElement.textContent = "Time left: " + timerleft +"s";
         timerleft--;
-        if(timerleft < 0){
+        if(currentQuestion >= questions.length || timerleft <= 0){
             clearInterval(timer);
+            optionTextEle.style.display = "none";
+            questionTextEle.style.display = "none";
             timerElement.textContent = "Time's up! Click restart to play again.";
+           RestartGame.style.display = "block";
+        //    startGameElement.disabled = false;
         }
         },1000);
 }
-
 function showQuestion(currentQuestion){
     var question = questions[currentQuestion];
     // console.log("Question: " + question);
@@ -144,12 +150,13 @@ function showQuestion(currentQuestion){
         var optionButton = document.createElement('button');
         optionButton.textContent = option.text;
         optionButton.classList.add('option-button');
-        optionButton.addEventListener('click',function(event){
-            event.preventDefault();
+        optionButton.addEventListener('click',function(){
             handleAnswerClick(option.correct);
-        });
+           
+        })
         optionTextEle.appendChild(optionButton);
-    });         
+        
+    });  
 }
 
 // check for answer
@@ -157,7 +164,10 @@ function showQuestion(currentQuestion){
 function handleAnswerClick(isCorrect){ 
 if(isCorrect){
     score++;
-    resultDisplayEle.textContent = "Correct answer!";
+    // resultDisplayEle.textContent = "Correct answer!";
+    // setTimeout(function() {
+    //     resultDisplayEle.textContent ="incorrect answer";
+    // },1000);
 } else {
     resultDisplayEle.textContent ="Wrong answer!";
     timerleft-=5;
@@ -165,25 +175,58 @@ if(isCorrect){
         timerleft = 0;
     }
 }
-
 currentQuestion++;
 if (currentQuestion <questions.length && timer > 0){
     showQuestion(currentQuestion);
+    // RestartGame.disabled = false;
 } else {
     optionTextEle.style.display = "none";
     resultDisplayEle.textContent = "coding quiz over! Your total score is ;" + score;
-    RestartGame.style.display = "block";
+// assign the empty object as the default value if no highest score is found
+    const highestScores=JSON.parse(localStorage.getItem('highestScore')) || {};
+
+    if(!highestScores[initials] || score > highestScores[initials]){
+        highestScores[initials] =score;
+        localStorage.setItem('highestScore', JSON.stringify(highestScores));
+    }
 }};
+RestartGame.addEventListener("click", RestartQuiz);
+function RestartQuiz(){
+    // console.log("Quiz restarted");
+    currentQuestion = 0;
+    score = 0;
+    timerleft = 60;
+    startTimer();
+    showQuestion(currentQuestion);
+
+    // console.log("currentQuestion", currentQuestion);
+    // console.log("score", score);
+
+    resultDisplayEle.textContent= ""; 
+    // clear previous result display
+    initialsInput.value ='';
+    highestScoreDisplay.textContent =""; // clear highest score display
+    optionTextEle.style.display = "block";//Display the option buttons
+   
+    RestartGame.style.display = "none"; //hide the restart buttons
+}
+
+
+statSubmitButton.addEventListener("click",function(event){
+    event.preventDefault();
+         initials = initialsInput.value;
+    var highestScores = JSON.parse(localStorage.getItem('highestScore')) || {};
+    if (highestScores[initials]){
+// template literal 
+        highestScoreDisplay.textContent = `Highest Score for ${initials}: ${highestScores[initials]}`;
+    } else {
+        highestScoreDisplay.textContent ="No highest score recorded yet.";
+    }   
+});
 
 
 
-
-
-
-
-
-
-
+// peudo
 // store object questions in the array
 
 // use method getelementById to select the element from DOM.
