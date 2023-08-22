@@ -22,7 +22,7 @@ Some snapshots of this quiz challenge:
 ## Deployment Link
 
 -Please check the deloyed link below:
-
+-https://sabinkthapa.github.io/Javascript-quiz/
 
 
 

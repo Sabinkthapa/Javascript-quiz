@@ -245,6 +245,7 @@ if(isCorrect){
 } else {
     resultDisplayEle.textContent ="Previous Wrong answer!";
     timerleft-=5;
+    // To ensure the timerleft value doesn't overflow
     if (timerleft < 0) {
         timerleft = 0;
     }
