@@ -14,9 +14,9 @@
 Securing the job takes lots of skill related to interview questions and multiple questions can be one of them so those who are taking interview can go through this challenge to test their knowlege of programming.
 
 Some snapshots of this quiz challenge:
-! [quiz-snapshot](./Screenshots/quiz-snapshot.png)
-! [local-data-snapshot](./Screenshots/Local-data-storage.png)
-! [layout](./Screenshots/layout.png)
+![quiz-snapshot](./Screenshots/quiz-snapshot.png)
+![local-data-snapshot](./Screenshots/Local-data-storage.png)
+![layout](./Screenshots/layout.png)
 ![html-snapshot](./Screenshots/html.png)
 
 ## Deployment Link
