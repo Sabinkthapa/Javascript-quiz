@@ -89,6 +89,77 @@ const questions = [
             { text: "To validate user input", correct: false }
         ]
     },
+
+    {
+        question: "Which of the following is a correct way to define a function in JavaScript?",
+        options: [
+            { text: "function = myFunction() {}", correct: false },
+            { text: "const myFunction = function() {}", correct: true },
+            { text: "myFunction() => {}", correct: false },
+            { text: "def myFunction() {}", correct: false }
+        ]
+    },
+
+    {
+        question: "What is the purpose of the 'bind' method in JavaScript?",
+        options: [
+            { text: "To create a new function", correct: false },
+            { text: "To invoke a function", correct: false },
+            { text: "To attach event listeners", correct: false },
+            { text: "To set the value of 'this' for a function", correct: true }
+        ]
+    },
+
+    {
+        question: "What is the difference between 'null' and 'undefined' in JavaScript?",
+        options: [
+            { text: "'null' is an object, while 'undefined' is a primitive value", correct: false },
+            { text: "'null' represents an absence of a value intentionally assigned, while 'undefined' represents a variable that has been declared but not assigned a value", correct: true },
+            { text: "They are interchangeable and can be used interchangeably in code", correct: false },
+            { text: "'null' is a keyword used for function invocation, while 'undefined' is used for variable assignment", correct: false }
+        ]
+    },
+
+    {
+        question: "What does the 'prototype' property do in JavaScript?",
+        options: [
+            { text: "It defines private methods within a class", correct: false },
+            { text: "It is used to access the parent class methods", correct: false },
+            { text: "It is a property used to define static methods in a class", correct: false },
+            { text: "It allows the sharing of methods and properties among instances of a constructor function through inheritance", correct: true }
+        ]
+    },
+
+    {
+        question: "What is a 'Promise' in JavaScript used for?",
+        options: [
+            { text: "To define a new variable", correct: false },
+            { text: "To handle exceptions and errors", correct: false },
+            { text: "To represent a value that might be available now, or in the future, or never", correct: true },
+            { text: "To create asynchronous loops", correct: false }
+        ]
+    },
+    {
+        question: "What is the output of the following code?",
+        code: "console.log(2 + 3 + '5');",
+        options: [
+            { text: "'55'", correct: true },
+            { text: "'235'", correct: false },
+            { text: "10", correct: false },
+            { text: "25", correct: false }
+        ]
+    },
+
+    {
+        question: "What is a 'hoisting' in JavaScript?",
+        options: [
+            { text: "A mechanism to prioritize function declarations over variable declarations", correct: false },
+            { text: "A process of moving all variable declarations to the top of their scope during compilation", correct: true },
+            { text: "A technique to ensure that function expressions are executed before function declarations", correct: false },
+            { text: "A way to prevent global variables from being accessed within a function", correct: false }
+        ]
+    }
+    
 ];
 
 var startGameElement = document.getElementById("startbtn");
@@ -113,7 +184,7 @@ var statSubmitButton = document.getElementById("stat-submit");
 
 var currentQuestion = 0;
 var score = 0;
-var timerleft = 60;
+var timerleft = 120;
 var timer;
 var initials;
 
@@ -179,6 +250,7 @@ if(isCorrect){
     }
 }
 currentQuestion++;
+// check for showing question
 if (currentQuestion <questions.length && timer > 0){
     showQuestion(currentQuestion);
 } else {
@@ -191,6 +263,7 @@ if (currentQuestion <questions.length && timer > 0){
 
     if(!highestScores[initials] || score > highestScores[initials]){
         highestScores[initials] =score;
+        // store updated scores in localStorage
         localStorage.setItem('highestScore', JSON.stringify(highestScores));
     }
 }};
@@ -228,17 +301,16 @@ statSubmitButton.addEventListener("click",function(event){
 // template literal 
         highestScoreDisplay.textContent = `Highest Score for ${initials}: ${highestScores[initials]}`;
     } else {
-        highestScoreDisplay.textContent ="No recorded highest score/start the game.";
+        highestScoreDisplay.textContent ="No recorded highest score/press restart button to test again.";
 
-        initialsInput.value ='';
-    // highestScoreDisplay.textContent ="";
+ 
     }   
     
 });
 
 
 
-// peudo
+// peudo coding before coding
 // store object questions in the array
 
 // use method getelementById to select the element from DOM.
