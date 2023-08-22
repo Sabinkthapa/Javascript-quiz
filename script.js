@@ -105,6 +105,8 @@ var resultDisplayEle = document.getElementById("resultDisplay");
 // console.log(resultDisplayEle);
 var RestartGame = document.getElementById("restartbtn");
 // console.log(RestartGame);
+var Detailselement = document.querySelector(".details");
+// console.log(Detailselement);
 var initialsInput = document.getElementById("username");
 var highestScoreDisplay = document.getElementById("highestScore");
 var statSubmitButton = document.getElementById("stat-submit");
@@ -115,12 +117,12 @@ var timerleft = 60;
 var timer;
 var initials;
 
+
 startGameElement.addEventListener ('click' , quizStart);
 
 function quizStart (){
     // console.log("clicked");
     startGameElement.disabled = true;
-    statSubmitButton.disabled = true;
     startTimer();
     showQuestion(currentQuestion);
 }
@@ -140,8 +142,11 @@ function startTimer(){
         },1000);
 }
 function showQuestion(currentQuestion){
+
     var question = questions[currentQuestion];
     // console.log("Question: " + question);
+    questionTextEle.style.display = "block";
+    
     questionTextEle.textContent = question.question;
     // console.log(questionTextEle.textContent);
     // clear option buttons container before adding new buttons
@@ -165,12 +170,9 @@ function showQuestion(currentQuestion){
 function handleAnswerClick(isCorrect){ 
 if(isCorrect){
     score++;
-    resultDisplayEle.textContent = "Correct answer!";
-    // setTimeout(function() {
-    //     resultDisplayEle.textContent ="incorrect answer";
-    // },1000);
+    resultDisplayEle.textContent = "Previous correct answer!";
 } else {
-    resultDisplayEle.textContent ="Wrong answer!";
+    resultDisplayEle.textContent ="Previous Wrong answer!";
     timerleft-=5;
     if (timerleft < 0) {
         timerleft = 0;
@@ -182,6 +184,8 @@ if (currentQuestion <questions.length && timer > 0){
 } else {
     optionTextEle.style.display = "none";
     resultDisplayEle.textContent = "coding quiz over! Your total score is ;" + score;
+    Detailselement.style.display = "block";
+   
 // assign the empty object as the default value if no highest score is found
     const highestScores=JSON.parse(localStorage.getItem('highestScore')) || {};
 
@@ -197,9 +201,10 @@ function RestartQuiz(){
     score = 0;
     timerleft = 60;
     // showQuestion(currentQuestion);
-    startTimer();
+    quizStart()
     // console.log("currentQuestion", currentQuestion);
     // console.log("score", score);
+    Detailselement.style.display = "none";
 
     resultDisplayEle.textContent= ""; 
     // clear previous result display
@@ -213,7 +218,7 @@ function RestartQuiz(){
 
 statSubmitButton.addEventListener("click",function(event){
     event.preventDefault();
-         initials = initialsInput.value;
+         initials = initialsInput.value; 
     var highestScores = JSON.parse(localStorage.getItem('highestScore')) || {};
     if (!initials) {
         alert("Please enter your initials.");
@@ -226,7 +231,7 @@ statSubmitButton.addEventListener("click",function(event){
         highestScoreDisplay.textContent ="No recorded highest score/start the game.";
 
         initialsInput.value ='';
-    highestScoreDisplay.textContent ="";
+    // highestScoreDisplay.textContent ="";
     }   
     
 });

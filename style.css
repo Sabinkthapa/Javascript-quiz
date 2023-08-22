@@ -110,3 +110,7 @@ display: none;
 #stat-submit:hover{
     background-color: rgb(153, 154, 219);
 }
+
+.details {
+    display: none ;
+}
