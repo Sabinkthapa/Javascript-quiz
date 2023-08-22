@@ -77,6 +77,8 @@
     flex-direction: column;
     margin: 4px;
     padding: 4px;
+   font-family: 'Courier New', Courier, monospace;
+   font-weight: bold;
 }
 .option-button:hover {
     background-color: #73b2c1;
@@ -92,9 +94,11 @@
      margin-bottom: 0;
      margin-top: 170px;
 }
-.section #statgame{
+
+/* .section #statgame{
 display: none;
-}
+} */
+
 #statgame {
    margin-bottom: 25px;
 }

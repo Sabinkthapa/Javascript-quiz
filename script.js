@@ -120,6 +120,7 @@ startGameElement.addEventListener ('click' , quizStart);
 function quizStart (){
     // console.log("clicked");
     startGameElement.disabled = true;
+    statSubmitButton.disabled = true;
     startTimer();
     showQuestion(currentQuestion);
 }
@@ -149,7 +150,7 @@ function showQuestion(currentQuestion){
     question.options.forEach(function(option, index){
         var optionButton = document.createElement('button');
         optionButton.textContent = option.text;
-        optionButton.classList.add('option-button');
+        optionButton.classList.add('option-button'); //using classlist.add method to add a css class to the html element with the class name optionButton
         optionButton.addEventListener('click',function(){
             handleAnswerClick(option.correct);
            
@@ -164,7 +165,7 @@ function showQuestion(currentQuestion){
 function handleAnswerClick(isCorrect){ 
 if(isCorrect){
     score++;
-    // resultDisplayEle.textContent = "Correct answer!";
+    resultDisplayEle.textContent = "Correct answer!";
     // setTimeout(function() {
     //     resultDisplayEle.textContent ="incorrect answer";
     // },1000);
@@ -178,7 +179,6 @@ if(isCorrect){
 currentQuestion++;
 if (currentQuestion <questions.length && timer > 0){
     showQuestion(currentQuestion);
-    // RestartGame.disabled = false;
 } else {
     optionTextEle.style.display = "none";
     resultDisplayEle.textContent = "coding quiz over! Your total score is ;" + score;
@@ -196,9 +196,8 @@ function RestartQuiz(){
     currentQuestion = 0;
     score = 0;
     timerleft = 60;
+    // showQuestion(currentQuestion);
     startTimer();
-    showQuestion(currentQuestion);
-
     // console.log("currentQuestion", currentQuestion);
     // console.log("score", score);
 
@@ -216,12 +215,20 @@ statSubmitButton.addEventListener("click",function(event){
     event.preventDefault();
          initials = initialsInput.value;
     var highestScores = JSON.parse(localStorage.getItem('highestScore')) || {};
+    if (!initials) {
+        alert("Please enter your initials.");
+        return;
+    }
     if (highestScores[initials]){
 // template literal 
         highestScoreDisplay.textContent = `Highest Score for ${initials}: ${highestScores[initials]}`;
     } else {
-        highestScoreDisplay.textContent ="No highest score recorded yet.";
+        highestScoreDisplay.textContent ="No recorded highest score/start the game.";
+
+        initialsInput.value ='';
+    highestScoreDisplay.textContent ="";
     }   
+    
 });
 
 
